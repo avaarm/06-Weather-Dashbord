@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.jumbotron {
+    color: white;
+    background-color: #343a40;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+
+
+/* .submit {
+    /* float: right; */
+    background-color: dodgerblue;
+  }  */
+
+.form-inline {
+    padding-bottom: 50px;
+}
+
+.btn {
+    background-color: blue;
+    padding-left: 50px;
+    padding-right: 50px;
+    float: right;
+}
+
+div.container1{
+    background-color: rgb(243, 243, 243);
+    padding-bottom: 400px;
+    padding-right: 0px;
+    margin-right: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    border: cornsilk;
+    float: left;
+    text-align: center;
+}
+
+div.container2 {
+
+    background-color: white;
+    float: right;
+    text-align: center;
+   
+}
+
+
+
+/* @media screen and (max-width: 1000px) {
+    .container1 {
+      float: left;
+    }
+    .container2 {
+      float: right;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 14px; 
+    }} */
+
+
+
