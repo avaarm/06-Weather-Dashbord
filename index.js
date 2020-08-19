@@ -1,5 +1,5 @@
 var locations = JSON.parse(localStorage.getItem("locationInput")) || [];
-
+var locationsEl = $("forecast-list");
 
 function ajaxCall(forecastLocation) {
   var query5D =
@@ -106,7 +106,15 @@ function ajaxCall(forecastLocation) {
   });
 }
 
-
+function renderlocations() {
+  $(".forecast-list").empty();
+  for (var i = 0; i < locations.length; i++) {
+    locationsEl = locations.join();
+    var locationsItemEl = $("<li>").addClass("forecast-list-item");
+    locationsItemEl.text(locations[i]);
+    $(".forecast-list").prepend(locationsItemEl);
+  }
+}
 $(".fa-search").on("click", function (event) {
   event.preventDefault();
   $(".date-row").empty();
@@ -117,5 +125,12 @@ $(".fa-search").on("click", function (event) {
   }
   renderlocations();
   ajaxCall(forecastLocation);
+
+$(".forecast-list").on("click", "li", function (event) {
+  event.preventDefault();
+  $(".date-row").empty();
+  ajaxCall($(this).text());
+});
+
 
 });
