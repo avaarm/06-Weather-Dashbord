@@ -1,64 +1,67 @@
 var locations = JSON.parse(localStorage.getItem("locationInput")) || [];
-var locationsEl = $("forecast-list");
 
+// making the ajax call to Open Weather to query two different APIs
 function ajaxCall(forecastLocation) {
   var query5D =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     forecastLocation +
-    "&appid=process.env.WeatherAPI_Key";
+    "&appid=3277741fcbafb61def09de3fc5eb0344";
     
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     forecastLocation +
-    "&appid=process.env.WeatherAPI_Key";
+    "&appid=3277741fcbafb61def09de3fc5eb0344";
 
+    // a get request that says append the query reult to my specified div
+    // querying for particular parameters, see Open Weather API documentation
   $.ajax({
     url: queryURL,
     method: "GET",
-
   }).then(function (response) {
     $("#currentData").empty();
     var cityEl = $("<h2>").addClass("card-title");
     var temperatureEl = $("<h5>");
     var humidityEl = $("<h5>");
     var windSpeedEl = $("<h5>");
-    var currentRow = $("<div>").attr("class", "row");
+    var row = $("<div>").attr("class", "row");
 
-    var day = date.getDate();
-    var date = new Date(response.dt * 1000);
-    var date = month + "/" + day + "/" + year;
-    var month = date.getMonth() + 1;
-    var year = date.getFullYear();
     
-    var humidityLevel = response.main.humidity;
+    var date = new Date(response.dt * 1000);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+
+    var dateDisplay = month + "/" + day + "/" + year;
     var city = response.name;
-    var speedWind = response.wind.speed;
     var fahrenheit = ((response.main.temp - 273.15) * 1.8 + 32).toFixed(1);
+    var humidity = response.main.humidity;
+    var windSpeed = response.wind.speed;
 
-    cityEl.text(city + " " + date);
+
+    cityEl.text(city + " " + dateDisplay);
     temperatureEl.text("Temperature: " + fahrenheit + " \xB0F");
-    humidityEl.text("Humidity: " + humidityLevel + " %");
-    windSpeedEl.text("Wind Speed: " + speedWind + " MPH");
+    humidityEl.text("Humidity: " + humidity + " %");
+    windSpeedEl.text("Wind Speed: " + windSpeed + " MPH");
 
-    var weatherIcon = response.weather[0].icon;
-    var iconSource = "https://openweathermap.org/img/w/" + weatherIcon + ".png";
+    var forecastIcon = response.weather[0].icon;
+    var forecastIconSrc = "https://openweathermap.org/img/w/" + forecastIcon + ".png";
     var iconImg = $("<img>").attr({
-      alt: "Weather icon",
-      src: iconSource,
-      
+      src: forecastIconSrc, alt: "Forcast Icon",
     });
 
-    $("#currentData").append(currentRow);
-    currentRow.append(cityEl, iconImg);
-    humidityEl.after(windSpeedEl);
+    $("#currentData").append(row);
+    row.append(cityEl, iconImg);
+    row.after(temperatureEl);
     temperatureEl.after(humidityEl);
-    currentRow.after(temperatureEl);
-   
-
+    humidityEl.after(windSpeedEl);
+// query of the 5 Day Weather API  
     $.ajax({
       url: query5D,
       method: "GET",
-    }).then(function (responseForecast) {
+
+// put the response in this div 
+    }).then(function (forecastResults) {
       $("#forecast5Day").empty();
       var title = $("<h3>").addClass("card-title");
       title.text("5 Day Forecast");
@@ -67,46 +70,51 @@ function ajaxCall(forecastLocation) {
       title.after(dateRow);
 
       for (var i = 6; i <= 39; i = i + 8) {
-        var a = new Date(responseForecast.list[i].dt * 1000);
-        var dayForecast = a.getDate();
-        var monthForecast = a.getMonth() + 1;
+        var a = new Date(forecastResults.list[i].dt * 1000);
         var yearForecast = a.getFullYear();
-        var tempForecast = (
-          (responseForecast.list[i].main.temp - 273.15) * 1.8 +
+        var monthForecast = a.getMonth() + 1;
+        var dayForecast = a.getDate();
+
+        // Temperature conversion
+        var forecastTemperature = (
+          (forecastResults.list[i].main.temp - 273.15) * 1.8 +
           32
+          
         ).toFixed(1);
-        var humidityForecast = responseForecast.list[i].main.humidity;
-        var weatherIconForecast = responseForecast.list[i].weather[0].icon;
-        var iconSourceForecast =
-          "http://openweathermap.org/img/w/" + weatherIconForecast + ".png";
-        var dateForecast =
+        var forecastHumidity = forecastResults.list[i].main.humidity;
+        var forecastIconForecast = forecastResults.list[i].weather[0].icon;
+        var forecastIconSrcForecast =
+          "http://openweathermap.org/img/w/" + forecastIconForecast + ".png";
+        var forecastDate =
           monthForecast + "/" + dayForecast + "/" + yearForecast;
         var cardDiv = $("<div>").addClass(
           "card bg-primary date lg-col-2 med-col-4 sm-col-6"
         );
-        var dateForecastEl = $("<h5>").addClass("card-title");
+        var forecastDateEl = $("<h5>").addClass("card-title");
         var iconImgForecast = $("<img>").attr({
-          src: iconSourceForecast,
+          src: forecastIconSrcForecast,
           alt: "Weather icon",
+
+          
         });
-        var tempForecastEl = $("<p>").addClass("text5day");
-        var humidityForecastEl = $("<p>").addClass("text5day");
+        var forecastTemperatureEl = $("<p>").addClass("text5day");
+        var forecastHumidityEl = $("<p>").addClass("text5day");
         cardDiv.append(
-          dateForecastEl,
+          forecastDateEl,
           iconImgForecast,
-          tempForecastEl,
-          humidityForecastEl
+          forecastTemperatureEl,
+          forecastHumidityEl
         );
         $(".date-row").append(cardDiv);
-        dateForecastEl.text(dateForecast);
-        tempForecastEl.text("Temp: " + tempForecast + " \xB0F");
-        humidityForecastEl.text("Humidity: " + humidityForecast + " %");
+        forecastDateEl.text(forecastDate);
+        forecastTemperatureEl.text("Temp: " + forecastTemperature + " \xB0F");
+        forecastHumidityEl.text("Humidity: " + forecastHumidity + " %");
       }
     });
   });
 }
 
-function renderlocations() {
+function locationsResult() {
   $(".forecast-list").empty();
   for (var i = 0; i < locations.length; i++) {
     locationsEl = locations.join();
@@ -115,6 +123,7 @@ function renderlocations() {
     $(".forecast-list").prepend(locationsItemEl);
   }
 }
+
 $(".fa-search").on("click", function (event) {
   event.preventDefault();
   $(".date-row").empty();
@@ -123,14 +132,6 @@ $(".fa-search").on("click", function (event) {
     locations.push(forecastLocation);
     localStorage.setItem("locationInput", JSON.stringify(locations));
   }
-  renderlocations();
+  locationsResult();
   ajaxCall(forecastLocation);
-
-$(".forecast-list").on("click", "li", function (event) {
-  event.preventDefault();
-  $(".date-row").empty();
-  ajaxCall($(this).text());
-});
-
-
 });
