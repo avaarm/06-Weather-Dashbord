@@ -3,92 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-   
-    
+    <title>Weather Dashboard</title>
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
     />
-    <!-- link for save icon font awesome-->
-    <link 
+    <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"
     />
-
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <!-- link for normalize-->
     <link rel="stylesheet" href="./Develop/normalize.css" />
-    <!-- link for style.css-->
     <link rel="stylesheet" href="./Develop/style.css" />
-    <title>Weather-Report</title>
   </head>
-  
-
   <body>
-        <!-- jumbotron from bootstrap-->
-        <header class="jumbotron">
-        <h1 class="display">Weather Dashbord</h1>
-        <p class="lead"></p>
-        <p id="currentDay" class="lead"></p>
-        </header>
-     
-         <div class="container1">
-          <div class="row">
-              <div class="col-sm-3">
-                  <div class="card1">
-                    <form class="form-inline">
-                      <a class="display">Search for a City: </a>
-                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <i class="fa fa-search"></i></button>
-                    </form>
-                    <button type="button" class="list-group-item list-group-item-action">Austin</button>
-                    <button type="button" class="list-group-item list-group-item-action">Another City</button>
-                    <button type="button" class="list-group-item list-group-item-action">Another City</button>
-                </div>
+    <div class="jumbotron jumbotron-fluid bg-dark">
+      <h1 class="display-4 heading">Weather Dashboard</h1>
+    </div>
+    <div class="container outer col-12">
+      <div class="row">
+        <div class="search container col-3">
+          <h3 class="city-search">Search for a city:</h3>
+          <div class="input-group mb-3">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search for a city"
+                aria-label="Search for a city"
+                aria-describedby="button-addon2"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-primary fas fa-search"
+                  type="button"
+                  id="button-addon2"
+                ></button>
+              </div>
             </div>
+          </div>
+          <ul class="list-group"></ul>
+        </div>
+        <div class="results container col-9">
+          <div class="card current">
+            <div id="currentData" class="card-body"></div>
+          </div>
+          <div class="card five-day">
+            <div id="forecast5Day" class="card-body"></div>
           </div>
         </div>
-        <div class="container2">
-          <div class="col-sm-20">
-                <div class="card2">                  
-                    <div class="card-block">
-                      <!-- Retrieved data will be place here -->
-                        <div class="city"></div>
-                        <div class="tempF"></div>
-                        <div class="humidity"></div>
-                        <div class="wind"></div>
-                        <div class="uvIndex"></div>
-                        <!-- 5-Day Forecast portion      -->
-                        <h4 class="card-title">5-Day Forcast:</h4>
-                        <p class="card-text">
-                          <button type="button" class="btn btn-primary">     </button>
-                          <button type="button" class="btn btn-primary">     </button>
-                          <button type="button" class="btn btn-primary">     </button>
-                          <button type="button" class="btn btn-primary">     </button>
-                          <button type="button" class="btn btn-primary">     </button>
-                        </p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                </div>
-            </div>
-          </div>
-      
-  
-
-
-    <!-- <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© copyright Armenuhi Avanesyan</div> -->
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    
-    <!-- <script src="moment-min.js"></script> Links to moment.js for time purposes-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./Develop/script.js"></script>
-    
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="test.js"></script>
   </body>
 </html>
