@@ -12,7 +12,7 @@ function ajaxCall(forecastLocation) {
     forecastLocation +
     "&appid=3277741fcbafb61def09de3fc5eb0344";
 
-    // a get request that says append the query reult to my specified div
+    // a get request that sa1ys append the query reult to my specified div
     // querying for particular parameters, see Open Weather API documentation
   $.ajax({
     url: queryURL,
